@@ -35,6 +35,7 @@ class GA():
         self.tmp_ff = np.array([])
         self.tmp_size = 0
 
+    # 适应值函数，适应值越高该基因越好
     def fitness(self, gene):
         ins = np.zeros(self.target_num+1, dtype=np.int32)
         seq = np.zeros(self.target_num, dtype=np.int32)
@@ -67,6 +68,7 @@ class GA():
                 post += 1
         return reward
 
+    # 使用堵轮盘选择种群
     def selection(self):
         roll = np.zeros(self.tmp_size, dtype=float)
         roll[0] = self.tmp_ff[0]
@@ -80,6 +82,7 @@ class GA():
             self.pop[i, :] = self.tmp_pop[j, :]
             self.ff[i] = self.tmp_ff[j]
 
+    # 变异
     def mutation(self):
         for i in range(self.tmp_size):
             flag = False
@@ -95,6 +98,7 @@ class GA():
             if flag:
                 self.tmp_ff[i] = self.fitness(self.tmp_pop[i, :])
 
+    # 生成种群
     def crossover(self):
         new_pop = []
         new_ff = []
@@ -137,7 +141,7 @@ class GA():
                 gene = self.tmp_pop[np.argmax(self.tmp_ff)]
             else:
                 count += 1
-
+        # ins为给任务分组的位置 seq为任务执行序列
         ins = np.zeros(self.target_num+1, dtype=np.int32)
         seq = np.zeros(self.target_num, dtype=np.int32)
         ins[self.target_num] = 1
