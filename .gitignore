@@ -1,1 +1,4 @@
 __pycache__
+task_pic/large/*
+task_pic/medium/*
+task_pic/small/*
